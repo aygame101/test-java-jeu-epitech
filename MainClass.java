@@ -8,7 +8,8 @@ public class MainClass {
         Game game = new Game();
         frame.add(game);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1920, 1080);
+        frame.setSize(800, 600); // Set an initial size
+        frame.setResizable(true); // Allow resizing
         frame.setVisible(true);
         game.start();
     }

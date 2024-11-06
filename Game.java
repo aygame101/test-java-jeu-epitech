@@ -11,8 +11,14 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     public Game() {
         setFocusable(true);
         addKeyListener(this);
-        player = new Player(100, 100);
+        player = new Player(100, 100, getWidth(), getHeight());
         timer = new Timer(16, this); 
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                player.updateWindowSize(getWidth(), getHeight());
+            }
+        });
     }
 
     public void start() {

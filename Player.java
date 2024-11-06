@@ -8,26 +8,29 @@ public class Player {
     private int width = 50, height = 50;
     private boolean left, right, jumping;
     private int velocityY = 0;
-    private int groundY = 500; // Y position of the ground
+    private int groundY;
+    private int windowWidth, windowHeight;
 
-    public Player(int x, int y) {
+    public Player(int x, int y, int windowWidth, int windowHeight) {
+        this.windowWidth = windowWidth;
+        this.windowHeight = windowHeight;
+        this.groundY = windowHeight - 100; // Set ground 100 pixels from bottom
         this.x = x;
         this.y = groundY - height; // Start the player above the ground
     }
 
-    public void update() { // displacement
+    public void update() {
         if (left) x -= 5;
         if (right) x += 5;
 
-        // Gravity: add 1 to the velocity when falling
         velocityY += 1; // gravity
         y += velocityY;
 
         // Ground collision
-        if (y > groundY) {
-            y = groundY; // Reset to ground level
-            velocityY = 0; // Reset vertical velocity
-            jumping = false; // don't allow jumping again
+        if (y > groundY - height) {
+            y = groundY - height;
+            velocityY = 0;
+            jumping = false;
         }
         
         // Prevent the player from moving off the left side of the screen
@@ -36,21 +39,28 @@ public class Player {
         }
         
         // Prevent the player from moving off the right side of the screen
-        if (x > 1530 - width) {
-            x = 1530 - width;
+        if (x > windowWidth - width) {
+            x = windowWidth - width;
         }
     }
 
     public void draw(Graphics g) {
         // Draw the ground
         g.setColor(Color.GREEN);
-        g.fillRect(0, groundY, 1920, 400); // Adjust width and height as needed
+        g.fillRect(0, groundY, windowWidth, windowHeight - groundY);
 
         // Draw the player
         g.setColor(Color.MAGENTA);
         g.fillRect(x, y, width, height);
     }
 
+    // ... (rest of the code remains the same)
+
+    public void updateWindowSize(int windowWidth, int windowHeight) {
+        this.windowWidth = windowWidth;
+        this.windowHeight = windowHeight;
+        this.groundY = windowHeight - 100; // Update ground position
+    }
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_LEFT) left = true;
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) right = true;
