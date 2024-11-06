@@ -36,8 +36,8 @@ public class Player {
         }
         
         // Prevent the player from moving off the right side of the screen
-        if (x > 1550 - width) {
-            x = 1550 - width;
+        if (x > 1530 - width) {
+            x = 1530 - width;
         }
     }
 
